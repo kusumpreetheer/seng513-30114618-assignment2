@@ -1,0 +1,81 @@
+body, html {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* More modern font */
+    padding: 0;
+    margin: 0;
+    background-color: #f7f7f7; /* Softer background color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Center the quiz container vertically */
+}
+
+#quiz-container {
+    width: 100%;
+    max-width: 600px; /* Limit the max width for better readability */
+    margin: 20px;
+    padding: 40px; /* More padding for better spacing */
+    background-color: #fff;
+    border-radius: 10px; /* Slightly larger border radius for modern look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Smoother shadow */
+    text-align: center; /* Center align the text */
+}
+
+button {
+    padding: 12px 24px; /* Slightly larger padding for bigger click area */
+    font-size: 16px; /* Larger font size for readability */
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 25px; /* Rounded buttons */
+    cursor: pointer;
+    margin: 0 10px; /* Space between buttons */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for buttons */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transition for hover */
+}
+
+button:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Larger shadow on hover for a 'lifted' effect */
+}
+
+#choices {
+    margin: 30px 0; /* Increase margin for better separation of question and choices */
+}
+
+.choice {
+    margin: 10px; /* Add horizontal margin to separate choice buttons */
+    white-space: nowrap; /* Prevent multi-line buttons */
+}
+
+.choice-selected {
+    background-color: #28a745; /* Different background color for selected choice */
+    color: #fff;
+    border: 2px solid #218838; /* Slightly darker border for contrast */
+}
+
+.choice:not(.choice-selected):hover {
+    background-color: #0069d9; /* Hover color for choices that are not selected */
+}
+
+#score {
+    margin-top: 30px; /* Larger margin above the score */
+    font-weight: bold; /* Make the score stand out more */
+    font-size: 20px; /* Larger font size for the score */
+}
+
+/* Add media query for responsiveness on smaller screens */
+@media (max-width: 600px) {
+    #quiz-container {
+        margin: 10px;
+        padding: 20px;
+    }
+
+    button {
+        padding: 10px 18px; /* Slightly smaller padding on small screens */
+        font-size: 14px; /* Smaller font size for smaller screens */
+    }
+
+    #score {
+        font-size: 18px; /* Smaller font size for the score on smaller screens */
+    }
+}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+</head>
+<body>
+
+    <!-- This is where the start screen is placed -->
+    <div id="start-screen">
+        <input type="text" id="username" placeholder="Enter your name" />
+        <button id="start-btn">Start Quiz</button>
+    </div>
+
+    <!-- The quiz container is initially hidden and will be displayed when the quiz starts -->
+    <div id="quiz-container" style="display: none;">
+        <h1>Quiz App</h1>
+        <div id="question"></div>
+        <div id="choices"></div>
+        <button id="next" style="display:none;">Next Question</button>
+        <div id="score"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
