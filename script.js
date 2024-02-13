@@ -67,22 +67,23 @@ class Quiz {
         const choicesButtons = document.querySelectorAll('#choices button');
         choicesButtons.forEach(button => {
             button.disabled = true; // Disable all buttons
-            button.classList.remove('choice-selected'); // Remove selected class from all buttons
-            if (button.innerText === selectedChoice) {
+            if (button.innerHTML === selectedChoice) {
                 button.classList.add('choice-selected'); // Add selected class to the clicked button
             }
         });
-
+    
         if (selectedChoice === this.questions[this.currentQuestionIndex].answer) {
             this.score++;
             this.correctStreak++;
         } else {
             this.correctStreak = 0; // Reset streak if the answer is wrong
         }
-
+    
+        this.updateScoreDisplay(); // Update the score display after making a choice
+    
         // Show the "Next Question" button
         document.getElementById('next').style.display = 'inline-block';
-    }
+    }    
 
     nextQuestion() {
         this.currentQuestionIndex++;
