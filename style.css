@@ -81,3 +81,13 @@ button:hover {
         font-size: 14px; /* Slightly smaller font on mobile */
     }
 }
+
+.correct-answer {
+    background-color: #28a745; /* Green background for correct answers */
+    color: white;
+}
+
+.choice-selected:not(.correct-answer) {
+    background-color: #dc3545; /* Red background if the choice selected is wrong */
+    color: white;
+}

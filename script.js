@@ -28,9 +28,16 @@ class Quiz {
         this.user = user;
         this.score = 0;
         this.questions = questions.sort((a, b) => 0.5 - Math.random()); // Shuffle questions
+        this.questionsByDifficulty = {
+            easy: questions.filter(q => q.difficulty === 'easy'),
+            medium: questions.filter(q => q.difficulty === 'medium'),
+            hard: questions.filter(q => q.difficulty === 'hard')
+        };
+        this.currentDifficulty = 'easy'; // Start with 'easy' difficulty
         this.currentQuestionIndex = 0;
         this.correctStreak = 0; // Track consecutive correct answers
         this.updateScoreDisplay();
+        this.handleChoice = this.handleChoice.bind(this); // ensuring that 'handleChoice' maintains the 'Quiz' instance as its context
     }
 
     updateScoreDisplay() {
@@ -54,7 +61,7 @@ class Quiz {
                 button.addEventListener('click', () => this.handleChoice(choice));
                 choicesContainer.appendChild(button);
             });
-    
+            
             // Hide the "Next Question" button until an answer is submitted
             document.getElementById('next').style.display = 'none';
         } else {
@@ -63,12 +70,32 @@ class Quiz {
         }
     }    
 
+    updateDifficulty() {
+        // Increase difficulty after every 3 consecutive correct answers, for example
+        if (this.correctAnswersStreak >= 3) {
+            if (this.currentDifficulty === 'easy') this.currentDifficulty = 'medium';
+            else if (this.currentDifficulty === 'medium') this.currentDifficulty = 'hard';
+            // Reset the streak
+            this.correctAnswersStreak = 0;
+        }
+    }
+
     handleChoice(selectedChoice) {
         const choicesButtons = document.querySelectorAll('#choices button');
         choicesButtons.forEach(button => {
             button.disabled = true; // Disable all buttons
+            
             if (button.innerHTML === selectedChoice) {
-                button.classList.add('choice-selected'); // Add selected class to the clicked button
+                // Highlight the selected choice
+                button.classList.add('choice-selected');
+            }
+            
+            // Highlight the correct answer
+            const currentQuestion = this.questions[this.currentQuestionIndex];
+            if (button.innerHTML === currentQuestion.answer) {
+                button.classList.add('correct-answer'); // Use this class to style the correct answer
+            } else {
+                button.classList.add('wrong-answer'); // Optionally, style incorrect answers differently
             }
         });
     
@@ -79,6 +106,8 @@ class Quiz {
             this.correctStreak = 0; // Reset streak if the answer is wrong
         }
     
+        this.updateDifficulty();
+
         this.updateScoreDisplay(); // Update the score display after making a choice
     
         // Show the "Next Question" button
