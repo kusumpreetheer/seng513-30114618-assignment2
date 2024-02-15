@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 class Question {
-    constructor(text, choices, answer, difficulty) {
+    constructor(text, choices, answer, difficulty) { // OOP: Encapsulation
         this.text = text;
         this.choices = choices;
         this.answer = answer;
@@ -24,7 +24,7 @@ class Question {
 }
 
 class Quiz {
-    constructor(questions, user) {
+    constructor(questions, user) { // OOP: Encapsulation
         this.user = user;
         this.score = 0;
         this.questions = questions.sort((a, b) => 0.5 - Math.random()); // Shuffle questions
@@ -130,12 +130,14 @@ class Quiz {
 
 class User {
     constructor(username) {
+        // The User class encapsulates user-specific data
         this.username = username;
         // Retrieve the score history from local storage or initialize it if not present
         this.scoreHistory = JSON.parse(localStorage.getItem(this.username + '_scoreHistory')) || [];
     }
 
     saveScore(score) {
+        // abstraction: the way how scores are saved is hidden from the users
         this.scoreHistory.push(score);
         // Save the updated score history to local storage
         localStorage.setItem(this.username + '_scoreHistory', JSON.stringify(this.scoreHistory));
@@ -147,10 +149,11 @@ class User {
 }
 
 async function fetchQuestions() {
+    // Use of async/await for asynchronous API call
     const apiUrl = 'https://opentdb.com/api.php?amount=10&type=multiple';
     try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
+        const response = await fetch(apiUrl); // Asynchronous fetch call
+        const data = await response.json(); // Asynchronously parsing
         return data.results.map(q => new Question(
             q.question,
             [...q.incorrect_answers, q.correct_answer].sort(() => Math.random() - 0.5),
@@ -158,7 +161,7 @@ async function fetchQuestions() {
             q.difficulty
         ));
     } catch (error) {
-        console.error('Failed to fetch questions:', error);
+        console.error('Failed to fetch questions:', error); // Error handling for failed fetch operation
         return [];
     }
 }
