@@ -2,17 +2,17 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('start-btn').addEventListener('click', () => {
         const username = document.getElementById('username').value.trim() || "Guest";
         if (username) {
-            // Hide the start screen and show the quiz container
+            // Hide the start screen immediately
             document.getElementById('start-screen').style.display = 'none';
-            document.getElementById('quiz-container').style.display = 'block';
-            
-            // Start the quiz with the username
+
+            // Start the quiz with the username.
             startQuiz(username);
         } else {
             alert("Please enter your name to start the quiz.");
         }
     });
 });
+
 
 class Question {
     constructor(text, choices, answer, difficulty) { // OOP: Encapsulation
@@ -167,16 +167,20 @@ async function fetchQuestions() {
 }
 
 async function startQuiz(username) {
-    const user = new User(username); // Create a new user with the entered username
-
-    // Ensure that questions are loaded before displaying them
     try {
-        const questions = await fetchQuestions();
+        const questions = await fetchQuestions(); // Asynchronously fetch the questions
         if (questions.length === 0) {
-            throw new Error('No questions were loaded.');
+            throw new Error('No questions were loaded.'); // Handle case where no questions are loaded
         }
-        const quiz = new Quiz(questions, user);
+
+        // Initialize the Quiz with questions and user
+        const quiz = new Quiz(questions, new User(username));
+
+        // Now that everything is set up, display the quiz container and the first question
+        document.getElementById('quiz-container').style.display = 'block';
         quiz.displayNextQuestion();
+
+        // Add event listener for the "Next" button here, if it's not already globally set
         document.getElementById('next').addEventListener('click', () => quiz.nextQuestion());
     } catch (error) {
         console.error(error);
